@@ -1,5 +1,5 @@
 {
-  "name": "storycap",
+  "name": "@kwotimation/storycap",
   "version": "3.1.0",
   "description": "A Storybook addon, Save the screenshot image of your stories! via puppeteer.",
   "main": "lib/index.js",
