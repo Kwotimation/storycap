@@ -69,6 +69,7 @@ export function createBaseScreenshotOptions({
       viewport: viewports[0],
       variants: viewports.slice(1).reduce((acc, vp) => ({ ...acc, [vp]: { viewport: vp } }), {}),
       defaultVariantSuffix: viewports[0],
+      selector: '',
     };
   } else {
     return {
@@ -77,6 +78,7 @@ export function createBaseScreenshotOptions({
       waitAssets: !disableWaitAssets,
       viewport: viewports[0],
       defaultVariantSuffix: '',
+      selector: '',
     };
   }
 }

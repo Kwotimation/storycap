@@ -23,6 +23,7 @@ export interface ScreenshotOptionFragments {
   click?: string;
   skip?: boolean;
   omitBackground?: boolean;
+  selector?: string;
 }
 
 export interface ScreenshotOptionFragmentsForVariant extends ScreenshotOptionFragments {

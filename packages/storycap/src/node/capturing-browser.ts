@@ -307,6 +307,28 @@ export class CapturingBrowser extends StoryPreviewBrowser {
     }
   }
 
+  private async captureRawScreenshotBuffer(screenshotOptions: ScreenshotOptions) {
+    if (screenshotOptions.selector) {
+      await this.page.waitForSelector(screenshotOptions.selector);
+      const element = await this.page.$(screenshotOptions.selector);
+
+      if (!element) {
+        // TODO: What to do?
+        throw new Error();
+      }
+
+      return element.screenshot({
+        fullPage: screenshotOptions.fullPage,
+        omitBackground: screenshotOptions.omitBackground,
+      });
+    } else {
+      return this.page.screenshot({
+        fullPage: screenshotOptions.fullPage,
+        omitBackground: screenshotOptions.omitBackground,
+      });
+    }
+  }
+
   private logInvalidVariantKeysReason(reason: InvalidVariantKeysReason | null) {
     if (reason) {
       if (reason.type === 'notFound') {
@@ -399,10 +421,7 @@ export class CapturingBrowser extends StoryPreviewBrowser {
     await this.page.evaluate(() => new Promise(res => (window as any).requestIdleCallback(res, { timeout: 3000 })));
 
     // Get PNG image buffer
-    const rawBuffer = await this.page.screenshot({
-      fullPage: emittedScreenshotOptions.fullPage,
-      omitBackground: emittedScreenshotOptions.omitBackground,
-    });
+    const rawBuffer = await this.captureRawScreenshotBuffer(emittedScreenshotOptions);
 
     let buffer: Buffer | null = null;
     if (Buffer.isBuffer(rawBuffer)) {
